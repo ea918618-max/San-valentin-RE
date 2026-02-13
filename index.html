@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renata 💖</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, #ff4e8c, #ff9a9e);
+    color: white;
+    overflow: hidden;
+}
+
+.container {
+    padding: 20px;
+    margin-top: 30px;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+img {
+    width: 200px;
+    border-radius: 20px;
+    margin: 15px 0;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+button {
+    padding: 12px 20px;
+    font-size: 18px;
+    margin: 10px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+#si {
+    background: white;
+    color: #ff4e8c;
+}
+
+#no {
+    background: #ff2e63;
+    color: white;
+    position: relative;
+}
+
+#contador {
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+/* corazones */
+.heart {
+    position: absolute;
+    animation: subir 5s linear infinite;
+}
+
+@keyframes subir {
+    0% { transform: translateY(100vh); opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>¿Quieres ser mi San Valentín Renata? 💖</h1>
+
+    <img src="foto.jpg" alt="Nosotros">
+
+    <div>
+        <button id="si" onclick="aceptar()">Sí 💘</button>
+        <button id="no" onmouseover="mover()">No 😅</button>
+    </div>
+
+    <div id="contador"></div>
+</div>
+
+<script>
+
+// Botón NO huye
+function mover() {
+    const noBtn = document.getElementById("no");
+    noBtn.style.position = "absolute";
+    noBtn.style.top = Math.random() * window.innerHeight + "px";
+    noBtn.style.left = Math.random() * window.innerWidth + "px";
+}
+
+// Cuando dice SÍ
+function aceptar() {
+    document.body.innerHTML = `
+        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; background:linear-gradient(135deg,#ff4e8c,#ff9a9e); color:white; text-align:center;">
+            <img src="foto.jpg" style="width:250px; border-radius:25px; box-shadow:0 0 25px rgba(0,0,0,0.4); margin-bottom:20px;">
+            <h1>💕 Eres el amor de mi vida 💕</h1>
+            <h2>Te amooooooooooooooooo 💖</h2>
+        </div>
+    `;
+}
+
+// Contador para 14 de febrero
+function actualizarContador() {
+    const ahora = new Date();
+    const añoActual = ahora.getFullYear();
+    let sanValentin = new Date(añoActual, 1, 14); 
+
+    if (ahora > sanValentin) {
+        sanValentin = new Date(añoActual + 1, 1, 14);
+    }
+
+    const diferencia = sanValentin - ahora;
+
+    const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
+    const minutos = Math.floor((diferencia / (1000 * 60)) % 60);
+
+    document.getElementById("contador").innerHTML =
+        "Faltan 💕 " + dias + " días, " + horas + " horas y " + minutos + " minutos para San Valentín 💘";
+}
+
+setInterval(actualizarContador, 1000);
+
+// Corazones flotando
+setInterval(() => {
+    const heart = document.createElement("div");
+    heart.innerHTML = "💖";
+    heart.classList.add("heart");
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 5000);
+}, 300);
+
+</script>
+
+</body>
+</html>
